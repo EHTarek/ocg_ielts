@@ -46,35 +46,38 @@ class _SplashScreenState extends State<SplashScreen>
       body: Center(
         child: FadeTransition(
           opacity: _animation,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(20),
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(
+                    Icons.auto_stories,
+                    size: 150,
+                    color: Color(0xFF1E3A8A),
+                  ),
                 ),
-                child: const Icon(
-                  Icons.auto_stories,
-                  size: 80,
-                  color: Color(0xFF1E3A8A),
+                const SizedBox(height: 48),
+                Text(
+                  'The Official Cambridge Guide to IELTS',
+                  style: GoogleFonts.poppins(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 24),
-              Text(
-                'The Official Cambridge Guide to IELTS',
-                style: GoogleFonts.poppins(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-              // Text(
-              //   'Official Guide Practice',
-              //   style: GoogleFonts.poppins(fontSize: 16, color: Colors.white70),
-              // ),
-            ],
+                // Text(
+                //   'Official Guide Practice',
+                //   style: GoogleFonts.poppins(fontSize: 16, color: Colors.white70),
+                // ),
+              ],
+            ),
           ),
         ),
       ),

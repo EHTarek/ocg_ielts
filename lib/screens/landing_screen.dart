@@ -21,6 +21,18 @@ class LandingScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: const BoxDecoration(
+                color: Color(0xFF1E3A8A),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.auto_stories,
+                size: 100,
+                color: Colors.white,
+              ),
+            ),
             const SizedBox(height: 20),
             Text(
               'What would you like to do today?',
