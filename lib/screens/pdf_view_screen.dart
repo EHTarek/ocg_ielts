@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import '../widgets/media_bottom_sheet.dart';
 
 class PDFViewScreen extends StatefulWidget {
   final String assetPath;
@@ -18,21 +19,16 @@ class _PDFViewScreenState extends State<PDFViewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // title: Text(
-        //   'Study Book',
-        //   style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
-        // ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.zoom_out),
+            icon: const Icon(Icons.menu),
             onPressed: () {
-              _pdfViewerController.zoomLevel--;
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.zoom_in),
-            onPressed: () {
-              _pdfViewerController.zoomLevel++;
+              showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                backgroundColor: Colors.transparent,
+                builder: (context) => const MediaBottomSheet(),
+              );
             },
           ),
         ],
