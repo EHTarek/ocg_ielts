@@ -1,20 +1,30 @@
 # Requirements
 
 ## 1. Executive Summary
-The goal of the **OCG IELTS** project is to serve students preparing for the IELTS exams by delivering seamless multi-modal educational resources directly to their mobile devices. The core focus is reliable access to text (PDFs), sound (Audio Tracks), and visual (Videos) content managed locally via Riverpod state.
+The **OCG IELTS** mobile app gives self-study IELTS candidates one-tap access to (a) the Official Cambridge Guide PDF bundled in the app and (b) a curated catalog of audio listening tracks and video lessons streamed from Cloudinary. The app runs fully client-side with no authentication, no user accounts, and no remote backend; the catalog itself ships as JSON inside the asset bundle.
 
 ## 2. Functional Requirements
-1. **Landing Hub:** The app must present a primary entry point allowing selection between varying resource types.
-2. **Video Delivery:** Must render video lists and present a unified player (Chewie) for video consumption.
-3. **Audio Delivery:** Must feature a dedicated audio playback widget with standardized controls (Play, Pause, Progress).
-4. **PDF Engine:** Must support large document rendering via Syncfusion to display IELTS exams.
-5. **Global State Control:** A bottom sheet (`media_bottom_sheet.dart`) must allow contextual media interactions while navigating lists.
+1. **Splash & launch.** On launch, show a 3 s branded splash (`SplashScreen`) and then auto-route to `LandingScreen` with no user interaction required.
+2. **Landing hub.** `LandingScreen` must present exactly two primary actions: *Read Study Book* and *View Resources*.
+3. **PDF reader.** *Read Study Book* opens `PDFViewScreen` with `assets/pdfs/book.pdf` rendered by `SfPdfViewer.asset`, supporting pan/zoom and explicit prev/next page controls (mini FABs).
+4. **In-reader media access.** While the PDF is open, an AppBar menu icon must open `MediaBottomSheet` so the user can browse audio/video tabs without leaving the book.
+5. **Audio/Video tab hub.** *View Resources* opens `ResourcesScreen` with two tabs ("Audio", "Video") rendered as a rounded-pill `TabBar`.
+6. **Audio playback.** Selecting an audio item shows `AudioPlayerWidget` as a modal bottom sheet with: play/pause FAB, ±10 s skip, seek slider, current position and total duration labels.
+7. **Video playback.** Selecting a video item pushes a full-page `VideoPlayerScreen` using `Chewie` (autoplay on, looping off) sized to the source aspect ratio.
+8. **Catalog data source.** Audio and video lists must be loaded from `assets/jsons/audio.json` and `assets/jsons/video.json` via `audioListProvider` / `videoListProvider` (`FutureProvider<List<MediaItem>>`).
 
-## 3. Non-Functional Requirements (NFRs)
-1. **State Preservation:** Media states (like video playing position or currently buffered audio) must not be unnecessarily wiped when transitioning between the media list and the reader view.
-2. **Platform Native Feel:** iOS and Android codecs must be cleanly integrated without visual tearing on device rotation.
-3. **Media Lifecycle:** OS-level audio interruptions (phone calls, backgrounding) must appropriately mute or pause the `chewie` and `audioplayers` instances to prevent resource leaks.
+## 3. Non-Functional Requirements
+1. **Disposal correctness.** Every player (`AudioPlayer`, `VideoPlayerController`, `ChewieController`) and animation controller must be released in `dispose()`. (Currently satisfied; see `code-quality-assessment.md`.)
+2. **Offline resilience.** The PDF must work fully offline (bundled asset). Streaming media degrades gracefully to a loading indicator when offline — *gap: there is no explicit error/retry UI today; see Acceptance Criteria #4.*
+3. **Theme consistency.** Material 3 with seed `#1E3A8A` (IELTS Blue) primary and `#FACC15` (IELTS Yellow) secondary, Poppins text theme.
+4. **Localization-ready.** All user-facing strings should eventually flow through `AppLocalizations`; the delegate is already wired in `main.dart`. Today English only.
+5. **Release pipeline.** Android release APK must be produced by the `v*`-tag GitHub Actions workflow with Flutter 3.41.1 stable.
 
 ## 4. Acceptance Criteria
-- All routes mapped from `landing_screen.dart` load successfully.
-- Media provider handles rapid component mounts/dismounts gracefully without crashing the engine.
+- Splash auto-advances to landing without manual tap.
+- Both landing cards navigate to their respective destinations.
+- PDF reader can flip pages via FABs and via gesture; menu icon opens the media sheet.
+- Audio modal sheet shows correct duration, slider tracks position in real time, ±10 s skip clamps to `[0, duration]`.
+- Video player initialises with the source's native aspect ratio and starts playing automatically.
+- Killing the audio or video screen frees the underlying controllers (verifiable via no leaked listeners).
+- **Open gap:** A long network timeout should surface an error message to the user instead of an indefinite spinner. *(Not yet implemented.)*

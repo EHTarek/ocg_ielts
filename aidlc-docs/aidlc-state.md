@@ -13,3 +13,6 @@
 
 ## Extensions Configured
 None
+
+## Last Sync
+- **2026-05-13** — All inception and construction docs refreshed against the current `lib/` source tree.
