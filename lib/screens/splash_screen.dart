@@ -41,8 +41,9 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     return Scaffold(
-      backgroundColor: const Color(0xFF1E3A8A), // IELTS Blue
+      backgroundColor: scheme.primary,
       body: Center(
         child: FadeTransition(
           opacity: _animation,
@@ -53,14 +54,14 @@ class _SplashScreenState extends State<SplashScreen>
               children: [
                 Container(
                   padding: const EdgeInsets.all(20),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
+                  decoration: BoxDecoration(
+                    color: scheme.onPrimary,
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.auto_stories,
                     size: 150,
-                    color: Color(0xFF1E3A8A),
+                    color: scheme.primary,
                   ),
                 ),
                 const SizedBox(height: 48),
@@ -69,13 +70,9 @@ class _SplashScreenState extends State<SplashScreen>
                   style: GoogleFonts.poppins(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: scheme.onPrimary,
                   ),
                 ),
-                // Text(
-                //   'Official Guide Practice',
-                //   style: GoogleFonts.poppins(fontSize: 16, color: Colors.white70),
-                // ),
               ],
             ),
           ),

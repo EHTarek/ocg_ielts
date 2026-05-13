@@ -12,13 +12,14 @@
                     SplashScreen (3 s fade)
                             │ pushReplacement
                             ▼
-                       LandingScreen
-                       ┌────┴────┐
+                       LandingScreen ──(gear icon)──► SettingsScreen
+                       ┌────┴────┐                     (themeSettingsProvider)
             Read Study Book      View Resources
                  │                     │
                  ▼                     ▼
           PDFViewScreen         ResourcesScreen
-          (SfPdfViewer.asset)   (DefaultTabController)
+          (download-or-cache    (DefaultTabController)
+           + SfPdfViewer.file)
                  │                ┌────┴────┐
                  │             AudioList   VideoList
                  │             Screen      Screen
@@ -32,9 +33,12 @@
           (audioplayers)
 ```
 
-- **UI layer:** Stateless / stateful widgets in `lib/screens/` and `lib/widgets/`. No business logic outside of player lifecycle management.
-- **State layer:** `lib/providers/media_provider.dart` exposes two `FutureProvider<List<MediaItem>>`s. Riverpod is *not* used for playback state — each player widget owns its own controllers.
-- **Model layer:** Single `MediaItem` class with `MediaType { audio, video }`.
+- **UI layer:** Stateless / stateful widgets in `lib/screens/` and `lib/widgets/`. No business logic outside of player lifecycle management and theme settings.
+- **State layer:**
+  - `lib/providers/media_provider.dart` — two `FutureProvider<List<MediaItem>>`s for the catalog.
+  - `lib/providers/theme_provider.dart` — `NotifierProvider<ThemeSettingsNotifier, ThemeSettings>` for brightness + accent palette, persisted to `SharedPreferences`.
+  - Riverpod is *not* used for playback state — each player widget owns its own controllers.
+- **Model layer:** `MediaItem` + `MediaType`, plus `ThemeSettings` + `AppPalette`.
 
 ## 2. Data Flow
 
@@ -88,6 +92,39 @@ ListTile tap → Navigator.push(VideoPlayerScreen(item))
                   dispose() → release both controllers
 ```
 
+### PDF download + caching (one-shot, per first open)
+```
+PDFViewScreen.initState
+            │
+            ▼
+   path_provider.getApplicationDocumentsDirectory()
+            │
+            ▼
+        <docs>/book.pdf exists?
+        ┌────────┴────────┐
+       yes               no
+        │                 │
+        ▼                 ▼
+     state=ready    state=needsDownload
+   SfPdfViewer.file  ┌── user taps "Download book" ──┐
+                     ▼                                │
+              HttpClient (dart:io).getUrl(bookPdfUrl)  │
+              followRedirects=true, maxRedirects=8     │
+              gzip auto-decoded                        │
+                     │                                 │
+                     ▼   chunks (StreamSubscription)   │
+              .part file ← write(chunk)                │
+                     │   _received += chunk.length     │
+                     │   setState() → progress UI      │
+                     ▼                                 │
+              done → check first 4 bytes == '%PDF'     │
+              ok? rename .part → book.pdf              │
+              state=ready → SfPdfViewer.file           │
+              bad header? throw _NotAPdfException      │
+              error? cleanup, delete .part             │
+              state=error → Retry button ──────────────┘
+```
+
 ## 3. Technology Choices & Rationale
 - **Flutter (^3.11.0):** Single codebase for Android (and iOS-ready). Material 3.
 - **Riverpod (^2.6.1):** Picked for the type-safe `FutureProvider` API and zero-boilerplate caching of the catalog JSON. Deliberately *not* extended to playback state — the controllers from `audioplayers` and `video_player` already encapsulate their own state machines.
@@ -98,6 +135,8 @@ ListTile tap → Navigator.push(VideoPlayerScreen(item))
 
 ## 4. Notable Design Decisions
 - **No global "now playing" state.** Each playback session is owned by the widget that triggered it; the trade-off is no cross-screen mini-player, but the win is simpler lifecycle and no orphan controllers.
-- **PDF asset path is passed explicitly.** `LandingScreen` passes `'assets/pdfs/book.pdf'` to `PDFViewScreen(assetPath: ...)` rather than hard-coding inside the screen — allows future reuse for additional books.
+- **PDF is downloaded on demand, not bundled.** The 80 MB Cambridge guide is not shipped inside the APK. `PDFViewScreen` resolves a cached `<applicationDocumentsDirectory>/book.pdf` on entry; if absent, it presents a *Download book* prompt that streams `AppConfig.bookPdfUrl` (raw GitHub URL) to disk with a determinate progress UI. The cached file persists until the user clears app data, so the network cost is paid exactly once.
 - **Splash uses `pushReplacement`**, so users cannot back-navigate to the splash.
 - **`MediaBottomSheet` reuses the same providers** as the standalone list screens — single source of truth for the catalog.
+- **Theme is reactive.** `MyApp` is a `ConsumerWidget` that watches `themeSettingsProvider`; both `theme` and `darkTheme` are derived from the current `AppPalette.seed` via `ColorScheme.fromSeed`, and `themeMode` is driven by the selected `ThemeMode`. There is no need to imperatively rebuild — Riverpod handles it.
+- **Persistence is fire-and-forget.** Notifier writes the new value to `SharedPreferences` without awaiting; UI never blocks on disk I/O.

@@ -12,55 +12,65 @@ class AudioListScreen extends ConsumerWidget {
     final audioListAsync = ref.watch(audioListProvider);
 
     return audioListAsync.when(
-      data: (audioList) => ListView.builder(
-        padding: const EdgeInsets.all(16),
-        itemCount: audioList.length,
-        itemBuilder: (context, index) {
-          final item = audioList[index];
-          return Card(
-            elevation: 4,
-            clipBehavior: Clip.hardEdge,
-            margin: const EdgeInsets.only(bottom: 16),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: ListTile(
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 10,
+      data: (audioList) {
+        final scheme = Theme.of(context).colorScheme;
+        return ListView.builder(
+          padding: const EdgeInsets.all(16),
+          itemCount: audioList.length,
+          itemBuilder: (context, index) {
+            final item = audioList[index];
+            return Card(
+              elevation: 4,
+              clipBehavior: Clip.hardEdge,
+              margin: const EdgeInsets.only(bottom: 16),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
               ),
-              leading: Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor.withOpacity(0.1),
-                  shape: BoxShape.circle,
+              child: ListTile(
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 10,
                 ),
-                child: Icon(
-                  Icons.audiotrack,
-                  color: Theme.of(context).primaryColor,
+                leading: Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: scheme.primaryContainer,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.audiotrack,
+                    color: scheme.onPrimaryContainer,
+                  ),
                 ),
+                title: Text(
+                  'Track ${item.sl}',
+                  style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
+                ),
+                subtitle: Text(
+                  item.file,
+                  style: GoogleFonts.poppins(fontSize: 12),
+                ),
+                trailing: Icon(
+                  Icons.play_circle_fill,
+                  size: 40,
+                  color: scheme.primary,
+                ),
+                onTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor: Colors.transparent,
+                    builder: (context) => AudioPlayerWidget(
+                      playlist: audioList,
+                      initialIndex: index,
+                    ),
+                  );
+                },
               ),
-              title: Text(
-                'Track ${item.sl}',
-                style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
-              ),
-              subtitle: Text(
-                item.file,
-                style: GoogleFonts.poppins(fontSize: 12),
-              ),
-              trailing: const Icon(Icons.play_circle_fill, size: 40),
-              onTap: () {
-                showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  backgroundColor: Colors.transparent,
-                  builder: (context) => AudioPlayerWidget(item: item),
-                );
-              },
-            ),
-          );
-        },
-      ),
+            );
+          },
+        );
+      },
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (err, stack) => Center(child: Text('Error: $err')),
     );

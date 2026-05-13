@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(flutter clean *)",
+      "Bash(mkdir -p /Users/mtislam2473/StudioProjects/ocg_ielts/.claude/skills/aidlc-feature /Users/mtislam2473/StudioProjects/ocg_ielts/.claude/skills/aidlc-sync /Users/mtislam2473/StudioProjects/ocg_ielts/.claude/skills/aidlc-status)",
+      "Edit(/.claude/skills/aidlc-feature/**)",
+      "Edit(/.claude/skills/aidlc-sync/**)",
+      "Edit(/.claude/skills/aidlc-status/**)"
+    ],
+    "additionalDirectories": [
+      "/Users/mtislam2473/StudioProjects/ocg_ielts/.claude/skills"
+    ]
+  }
+}

@@ -7,25 +7,26 @@ class ResourcesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     return DefaultTabController(
       length: 2,
       child: Scaffold(
         appBar: AppBar(
           title: Container(
             width: double.maxFinite,
-            margin: EdgeInsets.fromLTRB(12, 8, 12, 0),
+            margin: const EdgeInsets.fromLTRB(12, 8, 12, 0),
             decoration: BoxDecoration(
-              color: const Color(0xFFE5E7EB),
+              color: scheme.surfaceContainerHighest,
               borderRadius: BorderRadius.circular(30),
             ),
             child: TabBar(
               indicator: BoxDecoration(
-                color: Theme.of(context).primaryColor,
+                color: scheme.primary,
                 borderRadius: BorderRadius.circular(30),
               ),
               padding: EdgeInsets.zero,
-              labelColor: Colors.white,
-              unselectedLabelColor: Colors.black,
+              labelColor: scheme.onPrimary,
+              unselectedLabelColor: scheme.onSurface,
               dividerColor: Colors.transparent,
               indicatorSize: TabBarIndicatorSize.tab,
               indicatorPadding: EdgeInsets.zero,

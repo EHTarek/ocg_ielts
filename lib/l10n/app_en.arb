@@ -1,6 +1,58 @@
 {
     "@@locale": "en",
-    "@@last_modified": "2026-04-21",
+    "@@last_modified": "2026-05-13",
     "appTitle": "OCG IELTS",
-    "appDescription": "OCG IELTS is a comprehensive IELTS preparation app that helps students prepare for the IELTS exam."
+    "appDescription": "OCG IELTS is a comprehensive IELTS preparation app that helps students prepare for the IELTS exam.",
+    "settingsTitle": "Settings",
+    "appearanceSection": "Appearance",
+    "brightnessLabel": "Brightness",
+    "brightnessLight": "Light",
+    "brightnessDark": "Dark",
+    "brightnessSystem": "System",
+    "accentLabel": "Accent colour",
+    "paletteIeltsBlue": "IELTS Blue",
+    "paletteEmerald": "Emerald",
+    "paletteCrimson": "Crimson",
+    "previewSection": "Preview",
+    "previewBody": "This is how your text will look across the app.",
+    "previewFilledButton": "Filled",
+    "previewOutlinedButton": "Outlined",
+    "aboutSection": "About & Legal",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "openSourceLicenses": "Open Source Licenses",
+    "contactSupport": "Contact Support",
+    "rateApp": "Rate on Play Store",
+    "shareApp": "Share App",
+    "supportEmailSubject": "OCG IELTS — Support request",
+    "couldNotOpenLink": "Could not open link",
+    "versionLabel": "Version {version} (build {build})",
+    "@versionLabel": {
+        "placeholders": {
+            "version": { "type": "String" },
+            "build": { "type": "String" }
+        }
+    },
+    "playerPrevious": "Previous",
+    "playerNext": "Next",
+    "downloadBookTitle": "Download the study book",
+    "downloadBookMessage": "The Cambridge guide will be downloaded once and stored on your device. After that you can read it offline.",
+    "downloadBookButton": "Download book",
+    "downloadingBookTitle": "Downloading book…",
+    "downloadingBookSize": "{received} of {total}",
+    "@downloadingBookSize": {
+        "placeholders": {
+            "received": { "type": "String" },
+            "total": { "type": "String" }
+        }
+    },
+    "downloadingBookSizeUnknown": "{received} downloaded",
+    "@downloadingBookSizeUnknown": {
+        "placeholders": {
+            "received": { "type": "String" }
+        }
+    },
+    "downloadFailedTitle": "Download failed",
+    "downloadRetryButton": "Retry",
+    "downloadInvalidPdf": "The downloaded file isn't a valid PDF. The configured URL may be pointing to an HTML preview or a redirect page instead of the actual book."
 }

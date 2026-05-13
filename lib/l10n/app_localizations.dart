@@ -105,6 +105,216 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'OCG IELTS is a comprehensive IELTS preparation app that helps students prepare for the IELTS exam.'**
   String get appDescription;
+
+  /// No description provided for @settingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settingsTitle;
+
+  /// No description provided for @appearanceSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get appearanceSection;
+
+  /// No description provided for @brightnessLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Brightness'**
+  String get brightnessLabel;
+
+  /// No description provided for @brightnessLight.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get brightnessLight;
+
+  /// No description provided for @brightnessDark.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get brightnessDark;
+
+  /// No description provided for @brightnessSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get brightnessSystem;
+
+  /// No description provided for @accentLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Accent colour'**
+  String get accentLabel;
+
+  /// No description provided for @paletteIeltsBlue.
+  ///
+  /// In en, this message translates to:
+  /// **'IELTS Blue'**
+  String get paletteIeltsBlue;
+
+  /// No description provided for @paletteEmerald.
+  ///
+  /// In en, this message translates to:
+  /// **'Emerald'**
+  String get paletteEmerald;
+
+  /// No description provided for @paletteCrimson.
+  ///
+  /// In en, this message translates to:
+  /// **'Crimson'**
+  String get paletteCrimson;
+
+  /// No description provided for @previewSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview'**
+  String get previewSection;
+
+  /// No description provided for @previewBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This is how your text will look across the app.'**
+  String get previewBody;
+
+  /// No description provided for @previewFilledButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Filled'**
+  String get previewFilledButton;
+
+  /// No description provided for @previewOutlinedButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Outlined'**
+  String get previewOutlinedButton;
+
+  /// No description provided for @aboutSection.
+  ///
+  /// In en, this message translates to:
+  /// **'About & Legal'**
+  String get aboutSection;
+
+  /// No description provided for @privacyPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get privacyPolicy;
+
+  /// No description provided for @termsOfService.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms of Service'**
+  String get termsOfService;
+
+  /// No description provided for @openSourceLicenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Source Licenses'**
+  String get openSourceLicenses;
+
+  /// No description provided for @contactSupport.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Support'**
+  String get contactSupport;
+
+  /// No description provided for @rateApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate on Play Store'**
+  String get rateApp;
+
+  /// No description provided for @shareApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Share App'**
+  String get shareApp;
+
+  /// No description provided for @supportEmailSubject.
+  ///
+  /// In en, this message translates to:
+  /// **'OCG IELTS — Support request'**
+  String get supportEmailSubject;
+
+  /// No description provided for @couldNotOpenLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open link'**
+  String get couldNotOpenLink;
+
+  /// No description provided for @versionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version} (build {build})'**
+  String versionLabel(String version, String build);
+
+  /// No description provided for @playerPrevious.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous'**
+  String get playerPrevious;
+
+  /// No description provided for @playerNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get playerNext;
+
+  /// No description provided for @downloadBookTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Download the study book'**
+  String get downloadBookTitle;
+
+  /// No description provided for @downloadBookMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'The Cambridge guide will be downloaded once and stored on your device. After that you can read it offline.'**
+  String get downloadBookMessage;
+
+  /// No description provided for @downloadBookButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Download book'**
+  String get downloadBookButton;
+
+  /// No description provided for @downloadingBookTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloading book…'**
+  String get downloadingBookTitle;
+
+  /// No description provided for @downloadingBookSize.
+  ///
+  /// In en, this message translates to:
+  /// **'{received} of {total}'**
+  String downloadingBookSize(String received, String total);
+
+  /// No description provided for @downloadingBookSizeUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'{received} downloaded'**
+  String downloadingBookSizeUnknown(String received);
+
+  /// No description provided for @downloadFailedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Download failed'**
+  String get downloadFailedTitle;
+
+  /// No description provided for @downloadRetryButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get downloadRetryButton;
+
+  /// No description provided for @downloadInvalidPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'The downloaded file isn\'t a valid PDF. The configured URL may be pointing to an HTML preview or a redirect page instead of the actual book.'**
+  String get downloadInvalidPdf;
 }
 
 class _AppLocalizationsDelegate

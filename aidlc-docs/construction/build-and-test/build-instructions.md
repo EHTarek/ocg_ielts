@@ -52,6 +52,7 @@
   (Currently only the default scaffold test exists in `test/`.)
 
 ## Common Troubleshooting
-- **`SfPdfViewer` blank page:** confirm `assets/pdfs/book.pdf` is declared under `flutter > assets` in `pubspec.yaml` (it is) and that the asset is committed.
+- **PDF "Download book" loop / error:** the study book is fetched on first open from `AppConfig.bookPdfUrl` (raw GitHub URL) and cached under `<applicationDocumentsDirectory>/book.pdf`. Confirm internet permission is granted (already declared in the release `AndroidManifest.xml`) and that the URL resolves with a 200 response (`curl -I "${AppConfig.bookPdfUrl}"`). To force a re-download, clear the app's storage (Settings → Apps → OCG IELTS → Storage → Clear data) or `adb shell pm clear <package>`.
+- **`SfPdfViewer` blank page (after download):** ensure the download actually completed — partial `.part` files are deleted on failure, but if the app process is killed mid-download a leftover `.part` may exist. Clearing app storage resets the state machine.
 - **Audio/video won't load:** the URLs in `assets/jsons/{audio,video}.json` are public Cloudinary links; verify internet permission is granted and the Cloudinary host is reachable.
 - **Localization missing strings:** ensure `flutter gen-l10n` has been run after editing the ARB file, and that `l10n.yaml` is at repo root.

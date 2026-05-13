@@ -10,11 +10,12 @@ class MediaBottomSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final scheme = Theme.of(context).colorScheme;
     return Container(
       height: MediaQuery.of(context).size.height * 0.7,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+      decoration: BoxDecoration(
+        color: scheme.surface,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
       ),
       child: DefaultTabController(
         length: 2,
@@ -25,26 +26,26 @@ class MediaBottomSheet extends ConsumerWidget {
               width: 40,
               height: 4,
               decoration: BoxDecoration(
-                color: Colors.grey[300],
+                color: scheme.outlineVariant,
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
             const SizedBox(height: 8),
             Container(
               width: double.maxFinite,
-              margin: EdgeInsets.fromLTRB(12, 8, 12, 0),
+              margin: const EdgeInsets.fromLTRB(12, 8, 12, 0),
               decoration: BoxDecoration(
-                color: const Color(0xFFE5E7EB),
+                color: scheme.surfaceContainerHighest,
                 borderRadius: BorderRadius.circular(30),
               ),
               child: TabBar(
                 indicator: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
+                  color: scheme.primary,
                   borderRadius: BorderRadius.circular(30),
                 ),
                 padding: EdgeInsets.zero,
-                labelColor: Colors.white,
-                unselectedLabelColor: Colors.black,
+                labelColor: scheme.onPrimary,
+                unselectedLabelColor: scheme.onSurface,
                 dividerColor: Colors.transparent,
                 indicatorSize: TabBarIndicatorSize.tab,
                 indicatorPadding: EdgeInsets.zero,
@@ -80,7 +81,7 @@ class _AudioListTab extends ConsumerWidget {
           return ListTile(
             leading: Icon(
               Icons.audiotrack,
-              color: Theme.of(context).primaryColor,
+              color: Theme.of(context).colorScheme.primary,
             ),
             title: Text(
               'Track ${item.sl}',
@@ -93,7 +94,10 @@ class _AudioListTab extends ConsumerWidget {
                 context: context,
                 isScrollControlled: true,
                 backgroundColor: Colors.transparent,
-                builder: (context) => AudioPlayerWidget(item: item),
+                builder: (context) => AudioPlayerWidget(
+                  playlist: audioList,
+                  initialIndex: index,
+                ),
               );
             },
           );
@@ -119,7 +123,7 @@ class _VideoListTab extends ConsumerWidget {
           return ListTile(
             leading: Icon(
               Icons.movie_outlined,
-              color: Theme.of(context).primaryColor,
+              color: Theme.of(context).colorScheme.primary,
             ),
             title: Text(
               'Lesson ${item.sl}',
@@ -130,7 +134,10 @@ class _VideoListTab extends ConsumerWidget {
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => VideoPlayerScreen(item: item),
+                  builder: (context) => VideoPlayerScreen(
+                    playlist: videoList,
+                    initialIndex: index,
+                  ),
                 ),
               );
             },
